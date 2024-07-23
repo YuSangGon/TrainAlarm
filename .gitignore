@@ -1,2 +1,57 @@
 application.yaml
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Build directories
+android/app/build/
+ios/build/
+
+# Mac system files
 .DS_Store
+
+# Fastlane
+ios/fastlane/report.xml
+ios/fastlane/Preview.html
+ios/fastlane/screenshots/**/*.png
+ios/fastlane/test_output
+
+# Gradle files
+**/build
+
+# Miscellaneous
+.expo/
+web-build/
+
+# Sensitive files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# React Native specific
+__generated__/
+react-native.config.js
+coverage/
+*.expo*
+*.profile
+*.keystore
+
+# iOS specific
+ios/Pods/
+ios/Podfile.lock
+xcuserdata/
+*.xcuserstate
+!default.xcworkspace
+
+# Android specific
+android/.gradle/
+android/app/debug.keystore
+android/local.properties
