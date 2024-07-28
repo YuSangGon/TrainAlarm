@@ -37,7 +37,7 @@ public class AlarmInfo {
 
     @OneToMany
     @JoinColumn(name = "ALARM_INFO_NO")
-    private List<TrainRoute> trainRoutes = new ArrayList<>();
+    private List<RouteInfo> routeInfos = new ArrayList<>();
 
     public AlarmInfo dtoToEntity(AlarmInfoDto dto) {
         return AlarmInfo.builder()
