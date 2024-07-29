@@ -2,7 +2,6 @@ package project.trainalarm.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.trainalarm.api.ApiService;
@@ -18,12 +17,8 @@ public class HomeController {
     @GetMapping("/")
     public String home() {
         ApiResponseDto result = apiService.getSubwayInfo();
-        if (result == null) {
-            log.error("No response received or response body is empty");
-        }
-        else {
-            log.info(result.toString());
-        }
+        if (result == null) log.error("No response received or response body is empty");
+
         return "ok";
     }
 

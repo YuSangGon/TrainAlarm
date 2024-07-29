@@ -5,15 +5,19 @@ import io.netty.handler.codec.http.HttpScheme;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import project.trainalarm.dto.ApiResponseDto;
+import project.trainalarm.dto.SubwayArvlInfoDto;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -28,6 +32,7 @@ public class ApiService {
     private static final String TYPE = "json";
 
     private final WebClient webClient;
+    private final RedisTemplate<String, List<SubwayArvlInfoDto>> redisTemplate;
 
     public ApiResponseDto getSubwayInfo() {
         return webClient.get()
@@ -56,6 +61,23 @@ public class ApiService {
                     return Mono.empty();
                 })
                 .block();
+    }
+
+    public void clearDatabase() {
+
+    }
+
+    public void updateSubwayInfoInRedis(ApiResponseDto dto) {
+        clearDatabase();
+        ValueOperations<String, List<SubwayArvlInfoDto>> ops = redisTemplate.opsForValue();
+        dto.getRealtimeArrivalList().forEach(arvlInfo -> {
+            String statnNm = arvlInfo.getStatnNm();
+            if(ops.get(statnNm) == null) {
+                ops.set(statnNm, new ArrayList<>());
+            }
+            Objects.requireNonNull(ops.get(statnNm)).add(arvlInfo.clone());
+            ops.set(statnNm, Objects.requireNonNull(ops.get(statnNm)));
+        });
     }
 
 }

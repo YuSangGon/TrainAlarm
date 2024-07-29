@@ -36,14 +36,14 @@ public class ApiConfig {
 
     private ExchangeFilterFunction logRequest() {
         return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
-            log.info("Request: {} {}", clientRequest.method(), clientRequest.url());
+            log.debug("Request: {} {}", clientRequest.method(), clientRequest.url());
             return Mono.just(clientRequest);
         });
     }
 
     private ExchangeFilterFunction logResponse() {
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-            log.info("Response status code: {}", clientResponse.statusCode());
+            log.debug("Response status code: {}", clientResponse.statusCode());
             return Mono.just(clientResponse);
         });
     }
