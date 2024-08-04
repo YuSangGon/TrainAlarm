@@ -28,7 +28,6 @@ public class ApiConfig {
         return WebClient.builder()
                 .uriBuilderFactory(builderFactory())
                 .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(16 * 1024 * 1024)) // 16MB로 설정
-                //.filter(redirectFilter())
                 .filter(logRequest())
                 .filter(logResponse())
                 .build();
@@ -48,24 +47,5 @@ public class ApiConfig {
         });
     }
 
-//    private ExchangeFilterFunction redirectFilter() {
-//        return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-//            if (clientResponse.statusCode().is3xxRedirection()) {
-//                String redirectUri = clientResponse.headers().asHttpHeaders().getLocation().toString();
-//                return WebClient.builder()
-//                        .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(16 * 1024 * 1024))
-//                        .build().get().uri(redirectUri)
-//                        .exchangeToMono(response -> {
-//                            System.out.println("Redirected Response status code: " + response.statusCode());
-//                            return response.bodyToMono(ApiResponseDto.class)
-//                                    .flatMap(body -> {
-//                                        System.out.println("Redirected Response body: " + body);
-//                                        return Mono.just(clientResponse.mutate().body(String.valueOf(body)).build());
-//                                    });
-//                        });
-//            } else {
-//                return Mono.just(clientResponse);
-//            }
-//        });
-//    }
+
 }

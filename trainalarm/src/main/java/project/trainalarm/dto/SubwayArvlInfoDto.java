@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class SubwayArvlInfoDto implements Cloneable{
+public class SubwayArvlInfoDto {
 
     // 열차번호(현재운행하고 있는 호선별 열차번호)
     private Long btrainNo;
@@ -44,12 +44,4 @@ public class SubwayArvlInfoDto implements Cloneable{
     // 1:막차, 0:아님
     private Integer lstcarAt;
 
-    @Override
-    public SubwayArvlInfoDto clone() {
-        try {
-            return (SubwayArvlInfoDto) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }
